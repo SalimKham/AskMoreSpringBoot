@@ -99,7 +99,7 @@ public class ProfileService {
 	            return imageName;
 
 	        } catch (Exception e) {
-	        	throw new AccessException(e.getMessage());
+	        	throw new AccessException("error  "+ e.getClass()+"   "+  e.getMessage());
 	        }
 		
 	}
