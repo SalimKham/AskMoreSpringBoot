@@ -3,7 +3,6 @@ package io.khaminfo.ppmtool.web;
 import java.io.IOException;
 import java.security.Principal;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.khaminfo.ppmtool.domain.Crop;
-import io.khaminfo.ppmtool.domain.Student;
-import io.khaminfo.ppmtool.domain.Teacher;
-import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.domain.UserInfo;
 import io.khaminfo.ppmtool.services.MapValidationErrorService;
 import io.khaminfo.ppmtool.services.ProfileService;

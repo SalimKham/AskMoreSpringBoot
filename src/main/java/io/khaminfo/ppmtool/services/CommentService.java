@@ -5,9 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import io.khaminfo.ppmtool.domain.Comment;
-import io.khaminfo.ppmtool.domain.Field;
 import io.khaminfo.ppmtool.domain.LearningEvent;
-import io.khaminfo.ppmtool.domain.Tutorial;
 import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.exceptions.AccessException;
 import io.khaminfo.ppmtool.repositories.CommentRespository;

@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.web;
 
-import java.security.Principal;
+
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.khaminfo.ppmtool.domain.Chat;
-import io.khaminfo.ppmtool.domain.Groupe;
+
 import io.khaminfo.ppmtool.services.ChatService;
 import io.khaminfo.ppmtool.services.MapValidationErrorService;
 

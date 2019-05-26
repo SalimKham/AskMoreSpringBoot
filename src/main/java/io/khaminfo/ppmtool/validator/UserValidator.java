@@ -2,6 +2,7 @@ package io.khaminfo.ppmtool.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -9,7 +10,7 @@ import org.springframework.validation.Validator;
 
 import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.exceptions.AccessException;
-import io.khaminfo.ppmtool.security.SecurityConstants;
+
 
 @Component
 public class UserValidator implements Validator{

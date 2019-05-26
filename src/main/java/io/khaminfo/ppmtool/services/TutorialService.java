@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.services;
 
 import java.io.File;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +21,6 @@ import io.khaminfo.ppmtool.domain.Teacher;
 import io.khaminfo.ppmtool.domain.Tutorial;
 import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.exceptions.AccessException;
-import io.khaminfo.ppmtool.repositories.GroupeRepository;
 import io.khaminfo.ppmtool.repositories.QuestionRepository;
 import io.khaminfo.ppmtool.repositories.QuestionnaryRepository;
 import io.khaminfo.ppmtool.repositories.ResponseRepository;

@@ -3,10 +3,8 @@ package io.khaminfo.ppmtool.services;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.security.Principal;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.khaminfo.ppmtool.domain.Crop;
-import io.khaminfo.ppmtool.domain.Student;
-import io.khaminfo.ppmtool.domain.Teacher;
 import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.domain.UserInfo;
 import io.khaminfo.ppmtool.exceptions.AccessException;
@@ -51,8 +47,7 @@ public class ProfileService {
 	
 	
 	public UserInfo updateInfo(UserInfo userInfo,Principal principal) {
-		System.out.println("user info ");
-		User user = userRepository.findByUsername(principal.getName());
+	
 		 UserInfo info = profileRepository.findById(userInfo.getId_Info()).get();
 		 info.setFirstName(userInfo.getFirstName());
 		 info.setLastName(userInfo.getLastName());

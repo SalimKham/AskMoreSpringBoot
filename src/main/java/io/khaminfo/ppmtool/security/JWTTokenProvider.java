@@ -1,12 +1,9 @@
 package io.khaminfo.ppmtool.security;
 
 import java.util.Date;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +14,8 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.domain.User;
-import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.exceptions.AccessException;
-import io.khaminfo.ppmtool.repositories.UserRepository;
-import io.khaminfo.ppmtool.services.UserService;
 
 @Component
 public class JWTTokenProvider {

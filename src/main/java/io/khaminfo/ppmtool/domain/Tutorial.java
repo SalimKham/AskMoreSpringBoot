@@ -2,6 +2,7 @@ package io.khaminfo.ppmtool.domain;
 
 import java.util.Date;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,7 @@ import javax.persistence.PrePersist;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Tutorial extends LearningEvent {

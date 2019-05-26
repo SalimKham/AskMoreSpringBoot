@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.domain;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Teacher extends User {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String cv;
 	@JsonIgnore
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL , fetch = FetchType.LAZY)

@@ -1,6 +1,5 @@
 package io.khaminfo.ppmtool.web;
 
-import java.io.IOException;
 import java.security.Principal;
 
 import javax.validation.Valid;
@@ -17,15 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.khaminfo.ppmtool.domain.Field;
-import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.domain.Subject;
-import io.khaminfo.ppmtool.domain.Teacher;
-import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.services.FieldService;
 import io.khaminfo.ppmtool.services.MapValidationErrorService;
 import io.khaminfo.ppmtool.services.UserService;

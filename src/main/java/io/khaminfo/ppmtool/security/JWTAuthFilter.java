@@ -1,7 +1,7 @@
 package io.khaminfo.ppmtool.security;
 
 import java.io.IOException;
-import java.lang.System.Logger;
+
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.khaminfo.ppmtool.domain.User;

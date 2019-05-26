@@ -2,7 +2,6 @@ package io.khaminfo.ppmtool.services;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -10,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 import io.khaminfo.ppmtool.domain.Groupe;
 import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.domain.Teacher;

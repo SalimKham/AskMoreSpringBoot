@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.domain;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,7 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Student extends User{
-   @JsonIgnore
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+@JsonIgnore
 	@ManyToMany(mappedBy="students" , fetch = FetchType.EAGER)
 	private List<Groupe> groupes = new ArrayList<>();
 
