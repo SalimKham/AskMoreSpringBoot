@@ -76,8 +76,10 @@ public class ProfileService {
 
 	            // Get the file and save it somewhere
 	        	File f = new File("src/main/resources/static"+"/profile_picture/");
-	        	if(!f.exists())
+	        	if(!f.exists()) {
+	        		
 	        		f.mkdir();
+	        	}
 	            byte[] bytes = file.getBytes();
 	            ImageIcon img = new ImageIcon(bytes);
 	   
@@ -99,7 +101,7 @@ public class ProfileService {
 	            return imageName;
 
 	        } catch (Exception e) {
-	        	throw new AccessException("error  "+ e.getClass()+"   "+  e.getMessage());
+	        	throw new AccessException("SomeThing went Wrong!");
 	        }
 		
 	}
