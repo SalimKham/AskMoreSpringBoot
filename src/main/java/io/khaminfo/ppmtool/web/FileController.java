@@ -50,7 +50,7 @@ public class FileController {
 	@GetMapping("/profile/{fileName}")
 	public void getImage(@PathVariable String  fileName ,  HttpServletResponse response) throws IOException {
 		System.out.println("We are here" + fileName);
-		 Path path = Paths.get("src/main/resources/static"+"/profile-picture/" + fileName);
+		 Path path = Paths.get("src/main/resources/static"+"/profile_picture/" + fileName);
 		 DataInputStream in = new DataInputStream(new FileInputStream(path.toFile().getAbsolutePath()));
 		response.setHeader("Content-disposition: ", "attachment; filename="+fileName);
 		response.setContentType("image/png");
