@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -115,16 +116,20 @@ public class UserController {
 	}
 	
 
-	@PostMapping("/logout")
-	public ResponseEntity<?> logoutUser( Principal principal) {
-		userService.logoutUser(principal);	
+	@PostMapping("/logout/{username}")
+	public ResponseEntity<?> logoutUser( @PathVariable String username) {
+		System.out.println("logout controller "+ username);
+		userService.logoutUser(username);	
 		return new ResponseEntity<>( HttpStatus.OK);
 	}
-	
+	@GetMapping("/StudentGroupes")
+	public ResponseEntity<?> getStudentGroupes() {
+		return new ResponseEntity<String>( userService.getStudentGroupes(),HttpStatus.OK);
+	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllUsers() {
-		return new ResponseEntity<Iterable<User>>( userService.getAllUsers(),HttpStatus.OK);
+		return new ResponseEntity<List<Object[]>>( userService.getAllUsers(),HttpStatus.OK);
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable long id ) {
@@ -137,7 +142,7 @@ public class UserController {
 		 Path path = Paths.get("src/main/resources/static"+"/pdfs/" + fileName);
 		 
 		 DataInputStream in = new DataInputStream(new FileInputStream(path.toFile().getAbsolutePath()));
-		System.out.println(in);
+		
 		
 		response.setHeader("Content-disposition: ", "attachment; filename="+fileName);
 		response.setContentType("application/pdf");

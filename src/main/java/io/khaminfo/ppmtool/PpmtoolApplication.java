@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 public class PpmtoolApplication {
@@ -27,6 +29,7 @@ public class PpmtoolApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+3"));     // set Time Zone to moscow
     }
     
+
     
     public static void main(String[] args) {
         SpringApplication.run(PpmtoolApplication.class, args);

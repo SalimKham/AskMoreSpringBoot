@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Modifying;
 
@@ -37,6 +38,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
   @Transactional
   @Query("update User u set u.last_Visit_date = :date where u.username = :name")
   int updateVisitDate(  @Param("date") Date visit_date,@Param("name") String name) ;
+  
+  @Query("select u.id, u.username,u.email,u.user_state,u.type,u.userInfo.photo , u.nbr_added , u.last_Visit_date from User u  where u.id <> :id  ")
+  List<Object[]> findAllUsers( @Param("id") long id);
 }
 
 

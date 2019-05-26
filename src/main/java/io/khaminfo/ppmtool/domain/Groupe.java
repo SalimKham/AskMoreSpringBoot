@@ -29,16 +29,24 @@ public class Groupe {
 	@ManyToOne
 	@JoinColumn(name="owner_id", updatable = false, nullable = false)
 	private Teacher owner;
-	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "groupe_student",
 			joinColumns = { @JoinColumn(name = "groupe_id")  },
 			inverseJoinColumns = { @JoinColumn(name = "student_id") })
 	private List<Student> students = new ArrayList<>();
-	private String acceptedStudents;
+	@JsonIgnore
+	@ManyToMany(mappedBy="allowedGroupes" , fetch = FetchType.LAZY)
+	private List<LearningEvent> events = new ArrayList<>();
+	private String acceptedStudents = "";
 	
 	
 
+	public List<LearningEvent> getEvents() {
+		return events;
+	}
+	public void setEvents(List<LearningEvent> events) {
+		this.events = events;
+	}
 	public int getState() {
 		return state;
 	}

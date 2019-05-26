@@ -22,6 +22,7 @@ import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.exceptions.AccessException;
 import io.khaminfo.ppmtool.repositories.UserRepository;
+import io.khaminfo.ppmtool.services.UserService;
 
 @Component
 public class JWTTokenProvider {
@@ -35,6 +36,7 @@ public class JWTTokenProvider {
 		claimsMap.put("id", userId);
 		claimsMap.put("username", user.getUsername());
 		claimsMap.put("type", user.getType());
+		claimsMap.put("photo", user.getUserInfo().getPhoto());
 		
 		switch (user.getUser_state()) {
 		case 5:
@@ -49,10 +51,7 @@ public class JWTTokenProvider {
 		default:
 			break;
 		}
-		if(user.getType() == 2) {
-			Student student = (Student)user;
-			claimsMap.put("studentGroupes", student.getGroupesString());
-		}
+
 
 		return Jwts.builder().setSubject(userId).setClaims(claimsMap).setIssuedAt(now).setExpiration(expriryDate)
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET).compact();

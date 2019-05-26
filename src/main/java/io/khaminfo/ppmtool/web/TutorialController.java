@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.khaminfo.ppmtool.domain.Field;
 import io.khaminfo.ppmtool.domain.Question;
 import io.khaminfo.ppmtool.domain.Student;
 import io.khaminfo.ppmtool.domain.Tutorial;
@@ -37,10 +38,11 @@ public class TutorialController {
 	@Autowired
 	private TutorialService tutorialService;
 	@PostMapping("/add/")
-	public ResponseEntity<?> addTutorial(@RequestParam("subject") long subject ,@RequestParam("tutorial")  String details , @RequestParam(name = "file" , required = false) MultipartFile file) throws JsonParseException, JsonMappingException, IOException{
+	public ResponseEntity<?> addTutorial(@RequestParam("subject") long subject ,@RequestParam("allowedGroupes") String allowedGroupes ,@RequestParam("tutorial")  String details , @RequestParam(name = "file" , required = false) MultipartFile file) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
+		
 		Tutorial tutorial = mapper.readValue(details, Tutorial.class);
-		return new ResponseEntity<Tutorial>(tutorialService.addTutorial(subject, tutorial, file),HttpStatus.CREATED);
+		return new ResponseEntity<Tutorial>(tutorialService.addTutorial(subject, allowedGroupes,tutorial, file),HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{id}")
@@ -56,6 +58,11 @@ public class TutorialController {
 		 System.out.println(questionsArray.length+"   "+answersArry.length);
 		 tutorialService.addQuestionnary(tutorial, questionsArray, answersArry);
 		 return null;
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<?> getAllTutorials() {
+		return new ResponseEntity<Iterable<Tutorial>>( tutorialService.getAll(),HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteQuestionnary/{id}")

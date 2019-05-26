@@ -75,14 +75,18 @@ public class GroupeController {
 	
 	@PostMapping("/join/{id}")
 	public ResponseEntity<?> joinGroupe(@PathVariable long id) {
-		groupeService.JoinGroupe(id);
-		return new ResponseEntity<>( HttpStatus.OK);
+		
+		return new ResponseEntity<String>( groupeService.JoinGroupe(id), HttpStatus.OK);
 	}
 	
 	@PostMapping("/leave/{id}/{idStudent}")
 	public ResponseEntity<?> leaveGroupe(@PathVariable long id  , @PathVariable long idStudent) {
 		groupeService.leaveGroupe(id, idStudent);
 		return new ResponseEntity<>( HttpStatus.OK);
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getGroupe(@PathVariable long id ) {
+		return new ResponseEntity<Groupe> ( groupeService.getGroupe(id),HttpStatus.OK);
 	}
 	
 	@GetMapping("/students/{id}")

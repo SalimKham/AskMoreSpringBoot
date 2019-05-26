@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Student extends User{
    @JsonIgnore
-	@ManyToMany(mappedBy="students" , fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy="students" , fetch = FetchType.EAGER)
 	private List<Groupe> groupes = new ArrayList<>();
 
 	public List<Groupe> getGroupes() {
@@ -25,7 +25,7 @@ public class Student extends User{
 	public String getGroupesString() {
 		String groupes="";
 		for (Groupe groupe : this.groupes) {
-			groupes+=groupe.getId();
+			groupes+=groupe.getId()+"/";
 		}
 		return groupes;
 	}

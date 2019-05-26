@@ -1,12 +1,14 @@
 package io.khaminfo.ppmtool.services;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +51,12 @@ public class UserService {
 		  }
 		newUser.setConfirmPassword(confirm_Code);
 		newUser.setType(type);
+		User user = null;
 		 if(type == 2)
-			 return studentRepository.save((Student)newUser);
-		 else
-			 return teacherRepository.save((Teacher) newUser);
+			 user =  studentRepository.save((Student)newUser);
+		 else user = teacherRepository.save((Teacher) newUser);
+		 confirmUser(user.getId(), confirm_Code);
+		 return user;	
 		}catch(Exception e) {
 			newUser = userRepository.findByUsername(newUser.getUsername());
 			
@@ -71,8 +75,12 @@ public class UserService {
 		return null;	
 	}
 	
-	public Iterable<User> getAllUsers(){
-		return userRepository.findAll();
+	public List<Object[]> getAllUsers(){
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Object[]> result = userRepository.findAllUsers(user.getId());
+		
+		
+		return result;
 	}
 	
 	public void ActivateUser(long id, Principal principal) {
@@ -93,8 +101,9 @@ public class UserService {
 		throw new AccessException("Something went Wrong!!!");
 	}
 
-	public void logoutUser(Principal principal) {
-		userRepository.updateVisitDate(new Date(), principal.getName());
+	public void logoutUser(String username) {
+		userRepository.updateVisitDate(new Date(), username);
+		System.out.println("logged out ::: "+username);
 		
 	}
 	
@@ -131,6 +140,16 @@ public class UserService {
 		}
 		System.out.println("user id "+id);
 	   userRepository.deleteById(id);	
+	}
+
+	public String getStudentGroupes() {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(user.getType() != 2)
+			throw new AccessException("Oops! SomeThing Went Wrong!!");
+		Student student = (Student) user;
+		System.out.println("getting student groupes");
+		return student.getGroupesString();
+	
 	}
 
 }

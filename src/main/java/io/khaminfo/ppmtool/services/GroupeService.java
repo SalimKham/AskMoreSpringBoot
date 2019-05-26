@@ -90,26 +90,36 @@ public class GroupeService {
 
 	public void acceptStudentInGroupe(long id, long id_student, Principal principal) {
 		// TODO Auto-generated method stub
+		System.out.println("Now we are here");
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (user.getType() != 3) {
+		
+		if (user.getType() != 2) {
+			System.out.println("correct type");
 			Groupe groupe = groupeRepository.getById(id);
 			if (groupe.getOwner().getId() != user.getId())
 				throw new AccessException("Access Denied!!!!");
-			String newList = groupe.getAcceptedStudents() + "/" + id;
+			System.out.println("before setting the list");
+			String newList = groupe.getAcceptedStudents() + "/" + id_student;
+			System.out.println("here we are");
+			System.out.println(newList);
 			if (groupeRepository.updateAcceptedStudent(id, newList) != 1)
 				throw new AccessException("No groupe Found");
 		}
 
 	}
 
-	public void JoinGroupe(long id_groupe) {
+	public String JoinGroupe(long id_groupe) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (user.getType() == 2) {
 			Groupe groupe = groupeRepository.getById(id_groupe);
 			Student student = (Student) user;
 			groupe.getStudents().add(student);
+			groupe.setNbr_users(groupe.getNbr_users()+1);
 			groupeRepository.save(groupe);
+			return student.getGroupesString()+id_groupe+"/";
 		}
+		throw new AccessException("Oops! Something went Wrong.");
+		
 	}
 
 	public void leaveGroupe(long id_groupe, long idStudent) {
@@ -123,7 +133,7 @@ public class GroupeService {
 		if (id == -1)
 			return;
 		Groupe groupe = groupeRepository.getById(id_groupe);
-
+   
 		List<Student> it = groupe.getStudents();
 		int index = 0;
 		for (Student st : it) {
@@ -134,7 +144,7 @@ public class GroupeService {
 			index++;
 
 		}
-
+         groupe.setNbr_users(groupe.getNbr_users() - 1);
 		if (groupe.getAcceptedStudents() != null) {
 			groupe.getAcceptedStudents().replace("" + id, "");
 		}
@@ -186,5 +196,10 @@ public class GroupeService {
 			return result;
 		}
 		return null;
+	}
+
+	public Groupe getGroupe(long id) {
+		// TODO Auto-generated method stub
+		return groupeRepository.getById(id);
 	}
 }

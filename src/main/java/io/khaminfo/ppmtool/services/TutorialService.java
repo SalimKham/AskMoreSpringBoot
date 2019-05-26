@@ -4,12 +4,15 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.khaminfo.ppmtool.domain.Groupe;
 import io.khaminfo.ppmtool.domain.Question;
 import io.khaminfo.ppmtool.domain.Questionnary;
 import io.khaminfo.ppmtool.domain.Response;
@@ -17,6 +20,7 @@ import io.khaminfo.ppmtool.domain.Teacher;
 import io.khaminfo.ppmtool.domain.Tutorial;
 import io.khaminfo.ppmtool.domain.User;
 import io.khaminfo.ppmtool.exceptions.AccessException;
+import io.khaminfo.ppmtool.repositories.GroupeRepository;
 import io.khaminfo.ppmtool.repositories.QuestionRepository;
 import io.khaminfo.ppmtool.repositories.QuestionnaryRepository;
 import io.khaminfo.ppmtool.repositories.ResponseRepository;
@@ -35,9 +39,11 @@ public class TutorialService {
 	private QuestionRepository questionRepository;
 	@Autowired
 	private ResponseRepository responseRepository;
+	@Autowired
+	private GroupeService groupeService;
 	
 	
-	public Tutorial addTutorial(long subject , Tutorial tutorial ,MultipartFile file  ) {
+	public Tutorial addTutorial(long subject , String allowedGroupes , Tutorial tutorial ,MultipartFile file  ) {
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (user.getType() != 3) {
 			throw new AccessException("Access Denied!!!!");
@@ -52,12 +58,27 @@ public class TutorialService {
  	           String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
  	           Path path = Paths.get("src/main/resources/static"+"/pdfs/" + name+"."+extension);
  	            Files.write(path, bytes);
- 	            tutorial.setContent("pdf/"+name+"."+extension);
+ 	            tutorial.setContent("pdfs/"+name+"."+extension);
  	            
  	            
             	 
              }
+             System.out.println("allowed groupes "+allowedGroupes);
              
+             if(allowedGroupes.length() != 0) {
+            	 Iterable<Groupe> result = new ArrayList<>();
+            	 List<Groupe> list = new ArrayList<>();
+            	 
+            	 result = groupeService.getTeacherGroupes();
+            	  for (Groupe groupe: result) {
+            		  System.out.println("groupe : "+groupe.getId());
+      	            if (allowedGroupes.indexOf(""+groupe.getId()) != -1) {
+      	            	System.out.println("yes allowed");
+      	                list.add(groupe);
+      	            }
+      	        }
+            	  tutorial.setAllowedGroupes(list);
+             }
              tutorial.setTeacher((Teacher) user);
 	         tutorial.setSubject(subjectRepository.getById(subject));
 	         tutorialRepository.save(tutorial);
@@ -121,6 +142,12 @@ public class TutorialService {
 				throw new AccessException("Access Denied!!!!");
 			}
 		}
+	}
+
+
+	public Iterable<Tutorial> getAll() {
+		// TODO Auto-generated method stub
+		return tutorialRepository.findAll();
 	}
 
 }
