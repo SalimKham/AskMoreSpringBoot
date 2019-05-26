@@ -76,6 +76,8 @@ public class ProfileService {
 
 	            // Get the file and save it somewhere
 	        	File f = new File("src/main/resources/static"+"/profile_picture/");
+	        	if(f == null )
+					throw new Exception ("no file");
 	        	if(!f.exists())
 	        		f.mkdir();
 	            byte[] bytes = file.getBytes();
