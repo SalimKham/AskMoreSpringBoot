@@ -95,8 +95,8 @@ public class ProfileService {
 				f = new File(f.getAbsolutePath().replace("."+extension, ".min."+extension));
 				ImageIO.write(b2,extension, f );
 	     
-	            profileRepository.updateProfilePicture(profileId, "profile_picture/"+imageName);
-	            return "profile_picture/"+imageName;
+	            profileRepository.updateProfilePicture(profileId,imageName);
+	            return imageName;
 
 	        } catch (Exception e) {
 	        	throw new AccessException("Oops!! SomeThing went Wrong!!");
