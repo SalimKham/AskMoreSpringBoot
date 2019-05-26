@@ -76,29 +76,28 @@ public class ProfileService {
 
 	            // Get the file and save it somewhere
 	        	File f = new File("src/main/resources/static"+"/profile_picture/");
-	        	if(f == null )
-					throw new Exception ("no file");
-	        	if(!f.exists())
-	        		f.mkdir();
-	            byte[] bytes = file.getBytes();
-	            ImageIcon img = new ImageIcon(bytes);
-	   
-	            float x_ratio = (float) img.getIconWidth() /crop.getDisplayWidth();
-	            float y_ratio = (float) img.getIconHeight()/crop.getDisplayHeight();
-	            
-	            crop.setRatio(x_ratio, y_ratio);
-				BufferedImage b = ImageUtils.crop(img.getImage(),crop.getX(),crop.getY(), crop.getWith(),crop.getHeight()	);
-			    BufferedImage b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 200,200);
-			    String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
-			   String imageName = ImageUtils.getRandomName();
-			    f = new File(f.getAbsolutePath()+"/"+imageName+"."+extension);
-				ImageIO.write(b2,extension, f );
-				 b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 56,56);
-				f = new File(f.getAbsolutePath().replace("."+extension, ".min."+extension));
-				ImageIO.write(b2,extension, f );
-	     
-	            profileRepository.updateProfilePicture(profileId, imageName);
-	            return imageName;
+	        	throw new AccessException("error  :"+file.getName());
+//	        	if(!f.exists())
+//	        		f.mkdir();
+//	            byte[] bytes = file.getBytes();
+//	            ImageIcon img = new ImageIcon(bytes);
+//	   
+//	            float x_ratio = (float) img.getIconWidth() /crop.getDisplayWidth();
+//	            float y_ratio = (float) img.getIconHeight()/crop.getDisplayHeight();
+//	            
+//	            crop.setRatio(x_ratio, y_ratio);
+//				BufferedImage b = ImageUtils.crop(img.getImage(),crop.getX(),crop.getY(), crop.getWith(),crop.getHeight()	);
+//			    BufferedImage b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 200,200);
+//			    String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+//			   String imageName = ImageUtils.getRandomName();
+//			    f = new File(f.getAbsolutePath()+"/"+imageName+"."+extension);
+//				ImageIO.write(b2,extension, f );
+//				 b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 56,56);
+//				f = new File(f.getAbsolutePath().replace("."+extension, ".min."+extension));
+//				ImageIO.write(b2,extension, f );
+//	     
+//	            profileRepository.updateProfilePicture(profileId, imageName);
+//	            return imageName;
 
 	        } catch (Exception e) {
 	        	throw new AccessException("error  "+ e.getClass()+"   "+  e.getMessage());
