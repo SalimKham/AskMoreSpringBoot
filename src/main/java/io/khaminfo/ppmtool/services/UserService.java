@@ -40,20 +40,21 @@ public class UserService {
 		  UserInfo info = new UserInfo();
 		  info.setUser(newUser);
 		  profileRepository.save(info);
-		  newUser.setUser_state(5);
+		  newUser.setUser_state(4);
 		  String s = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		  String confirm_Code="";
 		  Random r = new Random ();
 		  for (int i = 0; i < 20; i++) {
 		   confirm_Code+=s.charAt(r.nextInt(62));	
 		  }
-		newUser.setConfirmPassword(confirm_Code);
+		newUser.setConfirmPassword("");
 		newUser.setType(type);
 		User user = null;
 		 if(type == 2)
 			 user =  studentRepository.save((Student)newUser);
 		 else user = teacherRepository.save((Teacher) newUser);
-		 confirmUser(user.getId(), confirm_Code);
+		 //confirmUser(user.getId(), confirm_Code);
+		// System.out.println("user confirmation");
 		 return user;	
 		}catch(Exception e) {
 			newUser = userRepository.findByUsername(newUser.getUsername());
