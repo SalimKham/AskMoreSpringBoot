@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers()
 				.frameOptions().sameOrigin().and().authorizeRequests()
-				.antMatchers("/", SecurityConstants.H2_URL, SecurityConstants.SIGN_UP_URLS, "/favicon.ico", "/**/*.th.png", "/**/*.png" ,"/**/*.pdf",
+				.antMatchers("/", SecurityConstants.H2_URL, SecurityConstants.SIGN_UP_URLS, SecurityConstants.DOWNLOAD_URL,"/favicon.ico", "/**/*.th.png", "/**/*.png" ,"/**/*.pdf",
 						"/**/*.gif", "/**/*.html", "/**/*.jpg", "/**/*.css", "/**/*.js")
 				.permitAll().anyRequest().authenticated();
 		http.addFilterBefore(authFilter(), UsernamePasswordAuthenticationFilter.class);

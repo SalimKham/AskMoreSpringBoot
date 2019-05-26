@@ -1,14 +1,8 @@
 package io.khaminfo.ppmtool.web;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,34 +113,7 @@ public class UserController {
 		return new ResponseEntity<User>( userService.getUserById(id),HttpStatus.OK);
 	}
 
-	@GetMapping("/pdfs/{fileName}")
-	public void getContent(@PathVariable String  fileName ,  HttpServletResponse response) throws IOException {
-		System.out.println("ok "+fileName);
-		 Path path = Paths.get("src/main/resources/static"+"/pdfs/" + fileName);
-		 
-		 DataInputStream in = new DataInputStream(new FileInputStream(path.toFile().getAbsolutePath()));
-		
-		
-		response.setHeader("Content-disposition: ", "attachment; filename="+fileName);
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Transfer-Encoding", "download");
-		
-		DataOutputStream output = new DataOutputStream(response.getOutputStream());
-		long reset = path.toFile().length();
-		int buffer_size = 5*1024*1024;
-		byte[] buffer;
-		while( reset > 0 ){
-			if( buffer_size < reset ){
-			}else{
-				buffer_size = (int)reset;
-			}
-			reset -= buffer_size;
-			buffer = new byte[buffer_size];
-			in.readFully(buffer);
-			output.write(buffer);
-		}
-		
-	}
+	
 
 
 
