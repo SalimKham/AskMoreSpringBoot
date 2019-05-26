@@ -58,7 +58,7 @@ public class TutorialService {
  	           String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
  	           Path path = Paths.get("src/main/resources/static"+"/pdfs/" + name+"."+extension);
  	            Files.write(path, bytes);
- 	            tutorial.setContent("pdfs/"+name+"."+extension);
+ 	            tutorial.setContent(name+"."+extension);
  	            
  	            
             	 
