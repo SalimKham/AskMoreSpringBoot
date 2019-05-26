@@ -99,7 +99,7 @@ public class ProfileService {
 	            return "profile_picture/"+imageName;
 
 	        } catch (Exception e) {
-	        	throw new AccessException("Oops!! SomeThing went Wrong!!");
+	        	throw new AccessException(e.getMessage());
 	        }
 		
 	}
