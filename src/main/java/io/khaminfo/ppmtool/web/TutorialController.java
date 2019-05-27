@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.khaminfo.ppmtool.domain.QuestionnaryRequest;
 import io.khaminfo.ppmtool.domain.Tutorial;
+import io.khaminfo.ppmtool.services.MapValidationErrorService;
 import io.khaminfo.ppmtool.services.TutorialService;
 
 @RestController
@@ -30,6 +32,8 @@ import io.khaminfo.ppmtool.services.TutorialService;
 public class TutorialController {
 	@Autowired
 	private TutorialService tutorialService;
+	@Autowired
+	private MapValidationErrorService mapErrorService;
 	@PostMapping("/add/")
 	public ResponseEntity<?> addTutorial(@RequestParam("subject") long subject ,@RequestParam("allowedGroupes") String allowedGroupes ,@RequestParam("tutorial")  String details , @RequestParam(name = "file" , required = false) MultipartFile file) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
@@ -45,8 +49,12 @@ public class TutorialController {
 	}
 	
 	@PostMapping("/addQuestionnary/{tutorial}")
-	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary ){
-		 String [] questionsArray = questionnary.getQuestions().split("sp_q");
+	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary,  BindingResult result ){
+		ResponseEntity<?> mappErr = mapErrorService.MapValidationService(result);
+		if (mappErr != null)
+			return mappErr;
+		
+		String [] questionsArray = questionnary.getQuestions().split("sp_q");
 		 String [] answersArry = questionnary.getAnswers().split("sp_ans");
 		 System.out.println(questionsArray.length+"   "+answersArry.length);
 		 tutorialService.addQuestionnary(tutorial, questionsArray, answersArry);
