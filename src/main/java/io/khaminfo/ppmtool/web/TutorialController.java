@@ -44,7 +44,7 @@ public class TutorialController {
 		return new ResponseEntity<Tutorial>(tutorialService.getTutorialById(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("/addQuestionnary/")
+	@PostMapping("/addQuestionnary/{tutorial}")
 	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary ){
 		 String [] questionsArray = questionnary.getQuestions().split("sp_q");
 		 String [] answersArry = questionnary.getAnswers().split("sp_ans");
