@@ -49,7 +49,7 @@ public class TutorialController {
 	}
 	
 	@PostMapping("/addQuestionnary/{tutorial}")
-	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary,  BindingResult result ){
+	public ResponseEntity<?> addQuestionnary(@PathVariable("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary,  BindingResult result ){
 		ResponseEntity<?> mappErr = mapErrorService.MapValidationService(result);
 		if (mappErr != null)
 			return mappErr;
