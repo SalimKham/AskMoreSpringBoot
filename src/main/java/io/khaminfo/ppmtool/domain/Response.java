@@ -1,5 +1,6 @@
 package io.khaminfo.ppmtool.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Response {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@NotBlank(message = "Please Enter A  Valid String")
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	private int responseOrder;
 	@JsonIgnore

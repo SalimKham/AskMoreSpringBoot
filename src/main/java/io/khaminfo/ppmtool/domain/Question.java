@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Question {
 	private long id;
 	private int mark;
 	@NotBlank(message = "Please Enter A valid String.")
+	@Column(columnDefinition = "TEXT")
 	private String Question;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
