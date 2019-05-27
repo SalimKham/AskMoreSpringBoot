@@ -2,6 +2,8 @@ package io.khaminfo.ppmtool.web;
 
 import java.io.IOException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.khaminfo.ppmtool.domain.QuestionnaryRequest;
 import io.khaminfo.ppmtool.domain.Tutorial;
 import io.khaminfo.ppmtool.services.TutorialService;
 
@@ -41,9 +45,9 @@ public class TutorialController {
 	}
 	
 	@PostMapping("/addQuestionnary/")
-	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@RequestParam("questions")  String questions ,  @RequestParam("answers")  String answers ){
-		 String [] questionsArray = questions.split("sp_q");
-		 String [] answersArry = answers.split("sp_ans");
+	public ResponseEntity<?> addQuestionnary(@RequestParam("tutorial") long tutorial ,@Valid @RequestBody QuestionnaryRequest questionnary ){
+		 String [] questionsArray = questionnary.getQuestions().split("sp_q");
+		 String [] answersArry = questionnary.getAnswers().split("sp_ans");
 		 System.out.println(questionsArray.length+"   "+answersArry.length);
 		 tutorialService.addQuestionnary(tutorial, questionsArray, answersArry);
 		 return null;
@@ -57,6 +61,12 @@ public class TutorialController {
 	@DeleteMapping("/deleteQuestionnary/{id}")
 	public void deleteQuestionnary(@PathVariable long id){
 	       tutorialService.deleteQuestionnary(id);
+		 
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteTutorial(@PathVariable long id){
+	       tutorialService.delete(id);
 		 
 	}
 

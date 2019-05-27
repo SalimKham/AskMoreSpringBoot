@@ -150,5 +150,15 @@ public class TutorialService {
 		return tutorialRepository.findAll();
 	}
 
+
+	public void delete(long id) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Tutorial tutorial = tutorialRepository.getById(id);
+		if(tutorial.getTeacher().getId() != user.getId())
+			throw new AccessException("Access Denied!!!!");
+		tutorialRepository.deleteById(id);
+		
+	}
+
 }
 
