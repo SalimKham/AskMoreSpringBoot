@@ -1,6 +1,7 @@
 package io.khaminfo.ppmtool.services;
 
-import java.io.File;
+
+
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.api.services.drive.model.File;
 
 import io.khaminfo.ppmtool.domain.Groupe;
 import io.khaminfo.ppmtool.domain.Question;
@@ -50,15 +53,12 @@ public class TutorialService {
 		}
 		try {
              if(file != null) {
-            	 File f = new File("src/main/resources/static"+"/pdfs/");
- 	        	if(!f.exists())
- 	        		f.mkdir();
+            	
  	            byte[] bytes = file.getBytes();
  	            String name = ImageUtils.getRandomName();
- 	           String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
- 	           Path path = Paths.get("src/main/resources/static"+"/pdfs/" + name+"."+extension);
- 	            Files.write(path, bytes);
- 	            tutorial.setContent(name+"."+extension);
+ 	         
+ 	           File googleFile = CreateGoogleFile.createGoogleFile("1Cm9asmUPETWfqPpzoCAjjfFPYKyOpn80", "application/pdf", name+".pdf",bytes);
+ 	            tutorial.setContent(googleFile.getId());
  	            
  	            
             	 
@@ -81,6 +81,7 @@ public class TutorialService {
              }
              tutorial.setTeacher((Teacher) user);
 	         tutorial.setSubject(subjectRepository.getById(subject));
+	         System.out.println("done");
 	         tutorialRepository.save(tutorial);
 		
 		} catch (Exception e) {

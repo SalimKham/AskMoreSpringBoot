@@ -1,7 +1,7 @@
 package io.khaminfo.ppmtool.services;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.security.Principal;
 
 import javax.imageio.ImageIO;
@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.api.services.drive.model.File;
 
 import io.khaminfo.ppmtool.domain.Crop;
 import io.khaminfo.ppmtool.domain.User;
@@ -75,30 +77,32 @@ public class ProfileService {
 		 try {
 
 	            // Get the file and save it somewhere
-	        	File f = new File("src/main/resources/static"+"/profile_picture/");
-	        	if(!f.exists()) {
-	        		
-	        		f.mkdir();
-	        	}
+	        
 	            byte[] bytes = file.getBytes();
 	            ImageIcon img = new ImageIcon(bytes);
 	   
 	            float x_ratio = (float) img.getIconWidth() /crop.getDisplayWidth();
 	            float y_ratio = (float) img.getIconHeight()/crop.getDisplayHeight();
-	            
+	            String image_url="";
 	            crop.setRatio(x_ratio, y_ratio);
 				BufferedImage b = ImageUtils.crop(img.getImage(),crop.getX(),crop.getY(), crop.getWith(),crop.getHeight()	);
 			    BufferedImage b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 200,200);
-			    String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
-			   String imageName = ImageUtils.getRandomName();
-			    f = new File(f.getAbsolutePath()+"/"+imageName+"."+extension);
-				ImageIO.write(b2,extension, f );
-				 b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 56,56);
-				f = new File(f.getAbsolutePath().replace("."+extension, ".min."+extension));
-				ImageIO.write(b2,extension, f );
-	     
-	            profileRepository.updateProfilePicture(profileId, imageName);
-	            return imageName;
+			     String imageName = ImageUtils.getRandomName();
+			 
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ImageIO.write( b2, "png", baos );
+				baos.flush();
+				File googleFile = CreateGoogleFile.createGoogleFile("1k9WhJDC3dnrodvn1PynO8a-PatoiJydY", "image/png", imageName+".png",baos.toByteArray());
+	            image_url = googleFile.getWebContentLink();
+	            b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 56,56);
+	            baos = new ByteArrayOutputStream();
+	            ImageIO.write( b2, "png", baos );
+				baos.flush();
+				googleFile = CreateGoogleFile.createGoogleFile("1k9WhJDC3dnrodvn1PynO8a-PatoiJydY", "image/png", imageName+".png",baos.toByteArray());
+	            image_url = googleFile.getWebContentLink()+" "+image_url;
+				profileRepository.updateProfilePicture(profileId, image_url);
+				System.out.println("done");
+	            return googleFile.getWebContentLink();
 
 	        } catch (Exception e) {
 	        	throw new AccessException("SomeThing went Wrong!");
