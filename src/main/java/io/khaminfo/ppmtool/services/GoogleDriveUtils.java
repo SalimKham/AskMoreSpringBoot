@@ -88,13 +88,8 @@ public class GoogleDriveUtils {
     }
     
     public static void downloadFile(OutputStream out , String id )
-  	      throws IOException {
-  	    // create parent directory (if necessary)
-  	    java.io.File parentDir = new java.io.File("/home/salim/Downloads");
-  	    if (!parentDir.exists() && !parentDir.mkdirs()) {
-  	      throw new IOException("Unable to create parent directory");
-  	    }
-  	    
+  	      throws Exception {
+  	  
   	
   	    getDriveService().files().get(id)
   	        .executeMediaAndDownloadTo(out);

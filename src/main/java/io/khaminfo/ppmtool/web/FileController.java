@@ -22,8 +22,8 @@ import io.khaminfo.ppmtool.services.GoogleDriveUtils;
 public class FileController {
 	
 	@GetMapping("/pdfs/{fileName}")
-	public void getPdf(@PathVariable String  fileName ,  HttpServletResponse response) throws IOException {
-		System.out.println("ok "+fileName);
+	public void getPdf(@PathVariable String  fileName ,  HttpServletResponse response) throws Exception {
+	
 //		 Path path = Paths.get("src/main/resources/static"+"/pdfs/" + fileName);
 //		 
 //		 DataInputStream in = new DataInputStream(new FileInputStream(path.toFile().getAbsolutePath()));
@@ -35,7 +35,7 @@ public class FileController {
 	
 	OutputStream output = new DataOutputStream(response.getOutputStream());
 	GoogleDriveUtils.downloadFile(response.getOutputStream(), fileName);
-	System.out.println("done");
+
 //		long reset = path.toFile().length();
 //		int buffer_size = 5*1024*1024;
 //		byte[] buffer;
