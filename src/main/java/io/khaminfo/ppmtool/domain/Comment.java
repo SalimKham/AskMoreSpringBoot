@@ -22,7 +22,7 @@ private long id;
 private long idReplay;
 @NotBlank(message = "Content required.")
 private String content;
-@JsonFormat(pattern = "yyyy-mm-dd")
+@JsonFormat(pattern = "yyyy-MM-dd")
 private Date createdAt;
 @ManyToOne(cascade = CascadeType.REFRESH)
 @JoinColumn(name="user_id", updatable = false, nullable = false)
