@@ -76,7 +76,6 @@ public class ProfileService {
 		
 		 try {
 
-	            // Get the file and save it somewhere
 	        
 	            byte[] bytes = file.getBytes();
 	            ImageIcon img = new ImageIcon(bytes);
@@ -101,8 +100,8 @@ public class ProfileService {
 				googleFile = CreateGoogleFile.createGoogleFile("1k9WhJDC3dnrodvn1PynO8a-PatoiJydY", "image/png", imageName+".png",baos.toByteArray());
 	            image_url = googleFile.getWebContentLink()+" "+image_url;
 				profileRepository.updateProfilePicture(profileId, image_url);
-				System.out.println("done");
-	            return googleFile.getWebContentLink();
+				
+	            return image_url;
 
 	        } catch (Exception e) {
 	        	throw new AccessException("SomeThing went Wrong!");

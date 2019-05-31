@@ -2,11 +2,13 @@ package io.khaminfo.ppmtool.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity 
@@ -16,6 +18,7 @@ public class Chat {
 	private long id;
 	@JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss")
 	private Date sendAt;
+	@Column(columnDefinition = "TEXT")
 	private String content;
 	private long sender;
 	private long receiver;

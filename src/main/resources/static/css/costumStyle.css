@@ -4291,6 +4291,21 @@ margin-right:3px;
 .pdf-view-icon:hover{
  background:url(../images/view_button_hover.png) no-repeat ;
 }
+.show_emoji{
+ display: block ;
+}
+.hide_emoji{
+ display: none ;
+}
+.emoji-mart-bar{
+display: none ;
+}
+.emoji-mart-search{
+display: none ;
+}
+.emoji-mart-scroll{
+height:200px;
+}
 
 .pdf_options{
 width:150px ; 
@@ -4300,5 +4315,6 @@ border:1px solid black;
 
 }
 }
+
 
   
