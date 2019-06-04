@@ -54,6 +54,10 @@ public class FileController {
 	
 	@GetMapping("/profile/{fileName}")
 	public void getImage(@PathVariable String  fileName ,  HttpServletResponse response) throws IOException {
+<<<<<<< HEAD:src/main/java/io/khaminfo/askmore/web/FileController.java
+=======
+		System.out.println("We are here" + fileName);
+>>>>>>> f9663bf310a8a6fb0af371ea868f2e0ba5c781af:src/main/java/io/khaminfo/ppmtool/web/FileController.java
 		 Path path = Paths.get("src/main/resources/static"+"/profile_picture/" + fileName);
 		 DataInputStream in = new DataInputStream(new FileInputStream(path.toFile().getAbsolutePath()));
 		

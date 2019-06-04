@@ -86,6 +86,7 @@ public class ProfileService {
 	            crop.setRatio(x_ratio, y_ratio);
 				BufferedImage b = ImageUtils.crop(img.getImage(),crop.getX(),crop.getY(), crop.getWith(),crop.getHeight()	);
 			    BufferedImage b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 200,200);
+<<<<<<< HEAD:src/main/java/io/khaminfo/askmore/services/ProfileService.java
 			     String imageName = ImageUtils.getRandomName();
 			 
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -102,6 +103,18 @@ public class ProfileService {
 				profileRepository.updateProfilePicture(profileId, image_url);
 				
 	            return image_url;
+=======
+			    String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+			   String imageName = ImageUtils.getRandomName();
+			    f = new File(f.getAbsolutePath()+"/"+imageName+"."+extension);
+				ImageIO.write(b2,extension, f );
+				 b2 = ImageUtils.resize(b, crop.getWith(), crop.getHeight(), 56,56);
+				f = new File(f.getAbsolutePath().replace("."+extension, ".min."+extension));
+				ImageIO.write(b2,extension, f );
+	     
+	            profileRepository.updateProfilePicture(profileId,imageName);
+	            return imageName;
+>>>>>>> f9663bf310a8a6fb0af371ea868f2e0ba5c781af:src/main/java/io/khaminfo/ppmtool/services/ProfileService.java
 
 	        } catch (Exception e) {
 	        	throw new AccessException("SomeThing went Wrong!");

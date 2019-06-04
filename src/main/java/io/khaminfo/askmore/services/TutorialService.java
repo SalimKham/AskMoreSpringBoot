@@ -56,9 +56,16 @@ public class TutorialService {
             	
  	            byte[] bytes = file.getBytes();
  	            String name = ImageUtils.getRandomName();
+<<<<<<< HEAD:src/main/java/io/khaminfo/askmore/services/TutorialService.java
  	         
  	           File googleFile = CreateGoogleFile.createGoogleFile("1Cm9asmUPETWfqPpzoCAjjfFPYKyOpn80", "application/pdf", name+".pdf",bytes);
  	            tutorial.setContent(googleFile.getId());
+=======
+ 	           String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+ 	           Path path = Paths.get("src/main/resources/static"+"/pdfs/" + name+"."+extension);
+ 	            Files.write(path, bytes);
+ 	            tutorial.setContent(name+"."+extension);
+>>>>>>> f9663bf310a8a6fb0af371ea868f2e0ba5c781af:src/main/java/io/khaminfo/ppmtool/services/TutorialService.java
  	            
  	            
             	 
